@@ -3,9 +3,14 @@ package com.quicksell.myapplication;
 /**
  * Created by Darshan on 16-04-2017.
  */
-public class AsycClass {
+public class AsycClass implements MyThreadListener {
     String string="";
     public  AsycClass(){
+
+    }
+
+    @Override
+    public void threadFinished() {
 
     }
 
@@ -25,18 +30,26 @@ public class AsycClass {
 
     public void execute(final String... params){
         onPreExecute();
+        final MyThreadListener listener = new MyThreadListener() {
+            @Override
+            public void threadFinished() {
+              onPostExecute(string);
+            }
+        };
         try {
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     string = doInBackground(params);
+                    listener.threadFinished();
                 }
             });
             thread.start();
-            thread.join();
-        }catch (InterruptedException e){
+            //thread.join();
+        }catch (Exception e){
             e.printStackTrace();
         }
-        onPostExecute(string);
+        //onPostExecute(string);
     }
+
 }
