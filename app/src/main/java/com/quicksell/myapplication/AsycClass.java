@@ -25,14 +25,18 @@ public class AsycClass {
 
     public void execute(final String... params){
         onPreExecute();
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-              string  = doInBackground(params);
-            }
-        });
-        thread.start();
-
+        try {
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    string = doInBackground(params);
+                }
+            });
+            thread.start();
+            thread.join();
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
         onPostExecute(string);
     }
 }
