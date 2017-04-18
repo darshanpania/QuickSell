@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onPreExecute() {
             super.onPreExecute();
-            textView.setText("Inside Pre Execute");
+            textView.setText("Inside Pre Execute"+ Thread.currentThread().getName());
         }
 
         @Override
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     textView2.setVisibility(View.VISIBLE);
-                    textView2.setText("inside do in background");
+                    textView2.setText("inside do in background"+ Thread.currentThread().getName());
                 }
             });
             return param;
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         public void onPostExecute(String params) {
             super.onPostExecute(params);
             textView3.setVisibility(View.VISIBLE);
-            textView3.setText("Inside On Post Execute " + param);
+            textView3.setText("Inside On Post Execute " + param + Thread.currentThread().getName());
         }
     }
 }

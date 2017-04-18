@@ -1,5 +1,8 @@
 package com.quicksell.myapplication;
 
+import android.os.Handler;
+import android.os.Looper;
+
 /**
  * Created by Darshan on 16-04-2017.
  */
@@ -41,7 +44,13 @@ public class AsycClass implements MyThreadListener {
                 @Override
                 public void run() {
                     string = doInBackground(params);
-                    listener.threadFinished();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.threadFinished();
+                        }
+                    });
+
                 }
             });
             thread.start();
